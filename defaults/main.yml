@@ -1,2 +1,43 @@
 ---
-# defaults file for ansible_role_elastic
+
+want_elastic: false
+
+elastic_version: 7.6.2
+
+elastic_elastic_release_base_url: https://artifacts.elastic.co/downloads/elasticsearch
+elastic_elastic_release_name: "elasticsearch-{{ elastic_version }}"
+elastic_elastic_release_archive: "{{ elastic_elastic_release_name }}-linux-x86_64.tar.gz"
+elastic_elastic_release_url: "{{ elastic_elastic_release_base_url }}/{{ elastic_elastic_release_archive }}"
+
+elastic_kibana_release_base_url: https://artifacts.elastic.co/downloads/kibana
+elastic_kibana_release_name: "kibana-{{ elastic_version }}-linux-x86_64"
+elastic_kibana_release_archive: "{{ elastic_kibana_release_name }}.tar.gz"
+elastic_kibana_release_url: "{{ elastic_kibana_release_base_url }}/{{ elastic_kibana_release_archive }}"
+
+elastic_user: elastic
+elastic_group: elastic
+
+elastic_groups:
+  - { name: "{{ elastic_group }}", gid: 3203 }
+elastic_users:
+  - name: "{{ elastic_user }}"
+    comment: "{{ elastic_user }}"
+    group: "{{ elastic_group }}"
+    groups:
+    home: "{{ elastic_home }}"
+    shell: /usr/sbin/nologin
+    uid: 3203
+    home_mode: '0700'
+    password: '*'
+
+elastic_dir: "/home/elastic"
+elastic_home: "{{ elastic_dir }}"
+elastic_distfiles: "{{ elastic_dir }}/distfiles"
+elastic_app_dir: "{{ elastic_dir }}/app"
+
+elastic_directories:
+  - { path: "{{ elastic_home }}", owner: "{{ elastic_user }}", group: "{{ elastic_group }}", mode: "0700" }
+  - { path: "{{ elastic_distfiles }}", owner: "{{ elastic_user }}", group: "{{ elastic_group }}", mode: "0755" }
+  - { path: "{{ elastic_app_dir }}", owner: "{{ elastic_user }}", group: "{{ elastic_group }}", mode: "0755" }
+
+elastic_prereq_packages: []

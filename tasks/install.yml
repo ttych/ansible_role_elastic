@@ -1,0 +1,13 @@
+---
+
+- name: install required packages
+  include: install_packages.yml
+  vars: {
+    packages: "{{ elastic_prereq_packages }}",
+    services: []
+    }
+
+- name: install elasticsearch
+  include: install_elasticsearch.yml
+  become: yes
+  become_user: "{{ elastic_user }}"

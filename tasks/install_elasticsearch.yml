@@ -1,0 +1,30 @@
+---
+
+- name: stat elasticsearch distribution
+  stat:
+    path: "{{ elastic_app_dir }}/{{ elastic_elastic_release_name }}/bin/elasticsearch"
+  register: t_elastic_elastic_release_stat
+
+- name: "install elasticsearch {{ elastic_version }}"
+  block:
+    - name: "download elasticsearch {{ elastic_version }}"
+      get_url:
+        url: "{{ elastic_elastic_release_url }}"
+        dest: "{{ elastic_distfiles }}/{{ elastic_elastic_release_archive }}"
+        mode: "0644"
+
+    - name: extract elasticsearch distribution
+      unarchive:
+        remote_src: yes
+        src: "{{ elastic_distfiles }}/{{ elastic_elastic_release_archive }}"
+        dest: "{{ elastic_app_dir }}"
+        mode: "go-w"
+
+  when: not t_elastic_elastic_release_stat.stat.exists
+
+- name: "link {{ elastic_version }} as default"
+  file:
+    src: "{{ elastic_app_dir }}/{{ elastic_elastic_release_name }}"
+    dest: "{{ elastic_app_dir }}/elasticsearch"
+    force: yes
+    state: link

@@ -1,2 +1,20 @@
 ---
-# tasks file for ansible_role_elastic
+
+- block:
+    - include: context.yml
+
+    - include: accounts.yml
+      vars: {
+        accounts_groups: "{{ elastic_groups }}",
+        accounts_users: "{{ elastic_users }}"
+      }
+
+    - include: workspace.yml
+
+    - include: install.yml
+
+  when: want_elastic
+
+- name: "set has_elastic to {{ want_elastic }}"
+  set_fact:
+    has_elastic: "{{ want_elastic }}"

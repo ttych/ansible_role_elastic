@@ -1,0 +1,3 @@
+---
+
+elastic_daemontools_dir: "{{ elastic_dir }}/svscan"

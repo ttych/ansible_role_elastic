@@ -1,0 +1,4 @@
+---
+
+elastic_dir: "{{ services_dir }}/elastic"
+elastic_home: "{{ elastic_dir }}/elastic"
