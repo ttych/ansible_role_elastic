@@ -1,6 +1,7 @@
 ---
 
-want_elastic: false
+want_elastic: no
+want_kibana: yes
 
 elastic_version: 7.6.2
 
@@ -10,8 +11,8 @@ elastic_elastic_release_archive: "{{ elastic_elastic_release_name }}-linux-x86_6
 elastic_elastic_release_url: "{{ elastic_elastic_release_base_url }}/{{ elastic_elastic_release_archive }}"
 
 elastic_kibana_release_base_url: https://artifacts.elastic.co/downloads/kibana
-elastic_kibana_release_name: "kibana-{{ elastic_version }}-linux-x86_64"
-elastic_kibana_release_archive: "{{ elastic_kibana_release_name }}.tar.gz"
+elastic_kibana_release_name: "kibana-{{ elastic_version }}"
+elastic_kibana_release_archive: "{{ elastic_kibana_release_name }}-linux-x86_64.tar.gz"
 elastic_kibana_release_url: "{{ elastic_kibana_release_base_url }}/{{ elastic_kibana_release_archive }}"
 
 elastic_user: elastic
