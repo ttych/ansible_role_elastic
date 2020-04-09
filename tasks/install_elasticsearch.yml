@@ -22,9 +22,9 @@
 
   when: not t_elastic_elastic_release_stat.stat.exists
 
-- name: "link {{ elastic_version }} as default"
+- name: "link elasticsearch {{ elastic_version }} as default"
   file:
-    src: "{{ elastic_app_dir }}/{{ elastic_elastic_release_name }}"
+    src: "./{{ elastic_elastic_release_name }}"
     dest: "{{ elastic_app_dir }}/elasticsearch"
     force: yes
     state: link
