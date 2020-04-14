@@ -1,0 +1,7 @@
+---
+
+root_group: wheel
+
+elastic_elastic_flag: -no-jdk
+elastic_prereq_packages:
+  - openjdk13

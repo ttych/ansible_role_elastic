@@ -10,6 +10,7 @@
     - name: "download elasticsearch {{ elastic_version }}"
       get_url:
         url: "{{ elastic_elastic_release_url }}"
+        checksum: "sha512:{{ elastic_elastic_release_url }}.sha512"
         dest: "{{ elastic_distfiles }}/{{ elastic_elastic_release_archive }}"
         mode: "0644"
 
@@ -25,6 +26,6 @@
 - name: "link elasticsearch {{ elastic_version }} as default"
   file:
     src: "./{{ elastic_elastic_release_name }}"
-    dest: "{{ elastic_app_dir }}/elasticsearch"
+    dest: "{{ elastic_app_elasticsearch_dir }}"
     force: yes
     state: link

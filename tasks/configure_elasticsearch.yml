@@ -1,0 +1,40 @@
+---
+
+- name: setup daemontools service for elasticsearch
+  block:
+    - name: create daemontools workspaces
+      file:
+        path: "{{ elastic_daemontools_dir }}/elasticsearch/{{ item.path }}"
+        owner: "{{ item.owner }}"
+        group: "{{ item.group }}"
+        mode: "{{ item.mode }}"
+        state: directory
+      loop: "{{ elastic_daemontools_directories_template }}"
+
+    - name: deploy daemontools run scripts
+      template:
+        src: "svscan/elasticsearch/{{ item.path }}"
+        dest: "{{ elastic_daemontools_dir }}/elasticsearch/{{ item.path }}"
+        owner: "{{ item.owner }}"
+        group: "{{ item.group }}"
+        mode: "{{ item.mode }}"
+      loop: "{{ elastic_daemontools_scripts_template }}"
+
+    - name: supervise (link) daemontools services
+      file:
+        src: "{{ elastic_daemontools_dir }}/{{ item }}"
+        dest: "{{ daemontools_svscan_dir }}/elastic_{{ item }}"
+        state: link
+      loop:
+        - elasticsearch
+
+  when: has_daemontools|d(false)
+
+
+
+- name: start standard service
+  block:
+    - fail:
+        msg: "not implemented"
+
+  when: not has_daemontools|d(false)

@@ -1,0 +1,10 @@
+#!/bin/sh
+
+exec 2>&1
+
+set -e
+
+cd "{{ elastic_app_elasticsearch_dir }}"
+
+exec setuidgid "{{ elastic_user }}" \
+     "{{ elastic_app_elasticsearch_dir }}/bin/elasticsearch"

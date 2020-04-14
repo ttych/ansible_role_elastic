@@ -11,6 +11,7 @@
         - name: "download kibana {{ elastic_version }}"
           get_url:
             url: "{{ elastic_kibana_release_url }}"
+            checksum: "sha512:{{ elastic_kibana_release_url }}.sha512"
             dest: "{{ elastic_distfiles }}/{{ elastic_kibana_release_archive }}"
             mode: "0644"
 
@@ -26,7 +27,7 @@
     - name: "link kibana {{ elastic_version }} as default"
       file:
         src: "./{{ elastic_kibana_release_name }}"
-        dest: "{{ elastic_app_dir }}/kibana"
+        dest: "{{ elastic_app_kibana_dir }}"
         force: yes
         state: link
 

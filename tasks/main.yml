@@ -13,6 +13,10 @@
 
     - include: install.yml
 
+    - include: configure_elasticsearch.yml
+
+    - include: configure_kibana.yml
+
   when: want_elastic
 
 - name: "set has_elastic to {{ want_elastic }}"
