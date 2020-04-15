@@ -1,0 +1,6 @@
+---
+
+- name: install kibana
+  include: install_kibana.yml
+  become: yes
+  become_user: "{{ elastic_user }}"

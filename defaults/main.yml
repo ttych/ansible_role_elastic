@@ -37,13 +37,44 @@ elastic_dir: "/home/elastic"
 elastic_home: "{{ elastic_dir }}"
 elastic_distfiles: "{{ elastic_dir }}/distfiles"
 elastic_app_dir: "{{ elastic_dir }}/app"
-elastic_app_elasticsearch_dir: "{{ elastic_app_dir }}/elasticsearch"
-elastic_app_kibana_dir: "{{ elastic_app_dir }}/kibana"
+elastic_elasticsearch_dir: "{{ elastic_app_dir }}/elasticsearch"
+elastic_elasticsearch_data_dir: "{{ elastic_dir }}/data"
+elastic_elasticsearch_logs_dir: "{{ elastic_dir }}/log"
+elastic_kibana_dir: "{{ elastic_app_dir }}/kibana"
+
+elastic_elasticsearch_config_dir: "{{ elastic_elasticsearch_dir }}/config"
+elastic_elasticsearch_conf_file: "{{ elastic_elasticsearch_config_dir }}/elasticsearch.yml"
+elastic_elasticsearch_jvm_options_file: "{{ elastic_elasticsearch_config_dir }}/jvm.options"
+elastic_elasticsearch_log4j2_properties_files: "{{ elastic_elasticsearch_config_dir }}/log4j2.properties"
+
+elastic_elasticsearch_cluster_name: cluster
+elastic_elasticsearch_http_port: 9200
+elastic_elasticsearch_node_name: "{{ ansible_fqdn }}"
+elastic_elasticsearch_network_host: "{{ ansible_default_ipv4.address }}"
+elastic_elasticsearch_boostrap_memory_lock: "true"
+elastic_elasticsearch_jvm_heap_size: 2g
+
+elastic_elasticsearch_confs:
+  - { key: cluster.name, value: "{{ elastic_elasticsearch_cluster_name }}" }
+  - { key: path.data, value: "{{ elastic_elasticsearch_data_dir }}" }
+  - { key: path.logs, value: "{{ elastic_elasticsearch_logs_dir }}" }
+  - { key: node.name, value: "{{ elastic_elasticsearch_node_name }}" }
+  - { key: network.host, value: "{{ elastic_elasticsearch_network_host }}" }
+  - { key: bootstrap.memory_lock, value: "{{ elastic_elasticsearch_boostrap_memory_lock }}" }
+  - { key: http.port, value: "{{ elastic_elasticsearch_http_port }}" }
+
+elastic_elasticsearch_jvm_options:
+  - { key: -Xms, value: "{{ elastic_elasticsearch_jvm_heap_size }}" }
+  - { key: -Xmx, value: "{{ elastic_elasticsearch_jvm_heap_size }}" }
+
+elastic_elasticsearch_log4j2_properties: []
 
 elastic_directories:
   - { path: "{{ elastic_home }}", owner: "{{ elastic_user }}", group: "{{ elastic_group }}", mode: "0700" }
   - { path: "{{ elastic_distfiles }}", owner: "{{ elastic_user }}", group: "{{ elastic_group }}", mode: "0755" }
   - { path: "{{ elastic_app_dir }}", owner: "{{ elastic_user }}", group: "{{ elastic_group }}", mode: "0755" }
+  - { path: "{{ elastic_elasticsearch_data_dir }}", owner: "{{ elastic_user }}", group: "{{ elastic_group }}", mode: "0750" }
+  - { path: "{{ elastic_elasticsearch_logs_dir }}", owner: "{{ elastic_user }}", group: "{{ elastic_group }}", mode: "0750" }
 
 elastic_prereq_packages: []
 

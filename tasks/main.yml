@@ -11,11 +11,15 @@
 
     - include: workspace.yml
 
-    - include: install.yml
+    - include: install_packages.yml
+      vars: {
+        packages: "{{ elastic_prereq_packages }}",
+        services: []
+      }
 
-    - include: configure_elasticsearch.yml
+    - include: setup_elasticsearch.yml
 
-    - include: configure_kibana.yml
+    - include: setup_kibana.yml
 
   when: want_elastic
 

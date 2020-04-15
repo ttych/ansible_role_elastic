@@ -1,5 +1,33 @@
 ---
 
+- name: install elasticsearch
+  include: install_elasticsearch.yml
+  become: yes
+  become_user: "{{ elastic_user }}"
+
+
+- name: configure elasticsearch.yml
+  lineinfile:
+    path: "{{ elastic_elasticsearch_conf_file }}"
+    regexp: '^{{ item.key }}:'
+    line: "{{ item.key }}: {{ item.value }}"
+  loop: "{{ elastic_elasticsearch_confs }}"
+
+- name: configure jvm.options
+  lineinfile:
+    path: "{{ elastic_elasticsearch_jvm_options_file }}"
+    regexp: '^{{ item.key }}'
+    line: "{{ item.key }}{{ item.value }}"
+  loop: "{{ elastic_elasticsearch_jvm_options }}"
+
+- name: configure log4j2.properties
+  lineinfile:
+    path: "{{ elastic_elasticsearch_jvm_options_file }}"
+    regexp: '^{{ item.key }} ='
+    line: "{{ item.key }} = {{ item.value }}"
+  loop: "{{ elastic_elasticsearch_log4j2_properties }}"
+
+
 - name: setup daemontools service for elasticsearch
   block:
     - name: create daemontools workspaces
@@ -29,7 +57,6 @@
         - elasticsearch
 
   when: has_daemontools|d(false)
-
 
 
 - name: start standard service

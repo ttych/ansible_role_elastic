@@ -4,7 +4,8 @@ exec 2>&1
 
 set -e
 
-cd "{{ elastic_app_elasticsearch_dir }}"
+cd "{{ elastic_elasticsearch_dir }}"
 
 exec setuidgid "{{ elastic_user }}" \
-     "{{ elastic_app_elasticsearch_dir }}/bin/elasticsearch"
+     env ES_HOME="{{ elastic_elasticsearch_dir }}" \
+     "{{ elastic_elasticsearch_dir }}/bin/elasticsearch"

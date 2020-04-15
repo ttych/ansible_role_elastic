@@ -27,7 +27,7 @@
     - name: "link kibana {{ elastic_version }} as default"
       file:
         src: "./{{ elastic_kibana_release_name }}"
-        dest: "{{ elastic_app_kibana_dir }}"
+        dest: "{{ elastic_kibana_dir }}"
         force: yes
         state: link
 

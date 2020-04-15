@@ -26,6 +26,6 @@
 - name: "link elasticsearch {{ elastic_version }} as default"
   file:
     src: "./{{ elastic_elastic_release_name }}"
-    dest: "{{ elastic_app_elasticsearch_dir }}"
+    dest: "{{ elastic_elasticsearch_dir }}"
     force: yes
     state: link
